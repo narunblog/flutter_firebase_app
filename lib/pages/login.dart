@@ -72,125 +72,122 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       //appBar: AppBar(),
       backgroundColor: Colors.white,
-      body: Container(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 20.0),
-            child: ListView(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Image.asset('images/login.jpg'),
+      body: Form(
+        key: _formKey,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 60.0, horizontal: 20.0),
+          child: ListView(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Image.asset('images/login.jpg'),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    labelStyle: TextStyle(
+                      fontSize: 20,
+                    ),
+                    border: OutlineInputBorder(),
+                    errorStyle: TextStyle(
+                      color: Colors.black26,
+                      fontSize: 15,
+                    ),
+                  ),
+                  controller: emailController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'please Enter email';
+                    } else if (!value.contains('@')) {
+                      return 'Please Enter valid email';
+                    }
+                    return null;
+                  },
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: TextStyle(
-                        fontSize: 20,
-                      ),
-                      border: OutlineInputBorder(),
-                      errorStyle: TextStyle(
-                        color: Colors.black26,
-                        fontSize: 15,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10.0),
+                child: TextFormField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: TextStyle(
+                      fontSize: 20,
+                    ),
+                    border: OutlineInputBorder(),
+                    errorStyle: TextStyle(
+                      color: Colors.black26,
+                      fontSize: 15,
+                    ),
+                  ),
+                  controller: passwordController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'please Enter password';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            email = emailController.text;
+                            password = passwordController.text;
+                          });
+                          userLogin();
+                        }
+                      },
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        ),
                       ),
                     ),
-                    controller: emailController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'please Enter email';
-                      } else if (!value.contains('@')) {
-                        return 'Please Enter valid email';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.0),
-                  child: TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: TextStyle(
-                        fontSize: 20,
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ForgotPass()),
+                        );
+                      },
+                      child: Text(
+                        'Forget Password',
+                        style: TextStyle(fontSize: 12.0),
                       ),
-                      border: OutlineInputBorder(),
-                      errorStyle: TextStyle(
-                        color: Colors.black26,
-                        fontSize: 15,
-                      ),
-                    ),
-                    controller: passwordController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'please Enter password';
-                      }
-                      return null;
-                    },
-                  ),
+                    )
+                  ],
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            setState(() {
-                              email = emailController.text;
-                              password = passwordController.text;
-                            });
-                            userLogin();
-                          }
-                        },
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                            fontSize: 18.0,
+              ),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Do not have an account?'),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Signup(),
                           ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ForgotPass()),
-                          );
-                        },
-                        child: Text(
-                          'Forget Password',
-                          style: TextStyle(fontSize: 12.0),
-                        ),
-                      )
-                    ],
-                  ),
+                        );
+                      },
+                      child: Text('signup'),
+                    )
+                  ],
                 ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Do not have an account?'),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Signup(),
-                            ),
-                          );
-                        },
-                        child: Text('signup'),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),
