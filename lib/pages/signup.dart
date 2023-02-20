@@ -24,11 +24,26 @@ class _SignupState extends State<Signup> {
 
   Future<void> userSignup() async {
     try {
-      await FirebaseAuth.instance
+      UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      print(userCredential);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.blueGrey,
+          content: Text(
+            'registration successfully Please signin',
+            style: TextStyle(
+              fontSize: 18.0,
+              color: Colors.amber,
+            ),
+          ),
+        ),
+      );
+
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => LoginPage()));
     } on FirebaseAuthException catch (error) {
+      print(error.code);
       if (error.code == 'weak-password') {
         print('The password provided is too weak.');
         ScaffoldMessenger.of(context).showSnackBar(
@@ -59,6 +74,14 @@ class _SignupState extends State<Signup> {
         );
       }
     }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
   }
 
   @override
