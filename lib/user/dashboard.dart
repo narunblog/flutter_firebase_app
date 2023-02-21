@@ -12,6 +12,11 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Image.asset('images/dashboard.png'),
+      ),
+    );
   }
 }
