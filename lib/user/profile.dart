@@ -19,7 +19,7 @@ class _ProfileState extends State<Profile> {
   User? user = FirebaseAuth.instance.currentUser;
 
   verifyEmail() async {
-    if (user == null && !user!.emailVerified) {
+    if (user != null && !user!.emailVerified) {
       await user!.sendEmailVerification();
       print('Verifycation Email has been send');
     }
